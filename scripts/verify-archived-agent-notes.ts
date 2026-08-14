@@ -26,6 +26,8 @@ const repoRoot = resolve(agentNoteRoot, '../..')
 const manifestRepoPath = '.agents/notes/archived/manifest.json'
 const errors: string[] = []
 const allowedRootFiles = new Set(['AGENTS.md', 'manifest.json'])
+/** Placeholder file that keeps empty kind directories tracked by Git; never an artifact. */
+const PLACEHOLDER_FILE = '.gitkeep'
 const kinds = new Set<string>()
 
 if (!existsSync(resolve(archiveRoot, 'AGENTS.md'))) errors.push('archived/AGENTS.md is required')
@@ -50,6 +52,7 @@ for (const entry of readdirSync(archiveRoot, { withFileTypes: true })) {
       errors.push(`${rel}: archived kind directories contain regular files only`)
       continue
     }
+    if (child.name === PLACEHOLDER_FILE) continue
     artifacts.set(rel, readFileSync(resolve(archiveRoot, rel)))
   }
 }
@@ -89,7 +92,15 @@ try {
   const baseline = readBaselineManifest(baselineRef)
   errors.push(...validateArchiveManifestExtension(baseline, manifest))
 } catch (error: unknown) {
-  errors.push(`archived/manifest.json: cannot read baseline ${JSON.stringify(baselineRef)}: ${error instanceof Error ? error.message : String(error)}`)
+  if (baselineRef === 'HEAD') {
+    // Fresh checkout: no commits yet, or no Git repository at all. Nothing is
+    // sealed in Git to compare against, so the empty sealed set is the correct
+    // baseline; the template's own first `doc-sync` run happens before the
+    // initial commit. An explicitly set DSH_ARCHIVE_BASE_REF stays fail-loud.
+    console.log('verify-archived-agent-notes: no HEAD baseline (fresh checkout); treating the sealed set as empty.')
+  } else {
+    errors.push(`archived/manifest.json: cannot read baseline ${JSON.stringify(baselineRef)}: ${error instanceof Error ? error.message : String(error)}`)
+  }
 }
 
 const extended = extendArchiveManifest(manifest, artifacts)
