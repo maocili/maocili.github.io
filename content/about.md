@@ -2,20 +2,30 @@
 title: "About"
 ---
 
-> 冰冻三尺 非一日之寒
-> 积土成山 非斯须之作
+Hi, I'm **Xifeng Xu** — a Computer Science master's student at DTU – Technical University of Denmark, currently based in the Copenhagen Metropolitan Area.
 
-Hey，我是**猫吃鲤**，一个 Gopher，现就读于浙江经贸职业技术学院
+My interests include Deep Learning, Machine Learning, and building reliable backend systems. Before starting my master's, I worked as a Software Engineer at Juchiyun (矩池云) in Hangzhou, China, where I worked with Docker, Linux/KVM virtualization, and cloud infrastructure.
 
-擅长 Python 爬虫、后端开发，另外会尝试去学习各种新技术
+### Experience
 
-除工作、学习之外，我还是一个独立音乐爱好者
+**Software Engineer · Juchiyun (矩池云)** · Hangzhou, China
+Mar 2022 – Jun 2024 · Full-time, on-site
 
-这是我的利用 [GitHub Pages](https://pages.github.com/) 和 [BY](https://github.com/qiubaiying) 搭建的个人博客。我在 GitHub 主页 [👉GitHub](https://github.com/maocili)
+- Docker, Linux/KVM virtualization
+- Backend and cloud infrastructure
 
-### Talks
+### Education
 
-- [GitHub](https://github.com)
-- [jekyll](http://jekyll.com.cn/)
-- [Hux](http://huangxuan.me/)
-- [Google Analytics](https://analytics.google.com/analytics)
+**DTU – Technical University of Denmark**
+Master of Engineering (M.Eng.) in Computer Science and Engineering · Sep 2025 – Jun 2027
+
+**Zhejiang Wanli University**
+B.Sc. in Data Science and Big Data Technology · Sep 2020 – Jun 2022
+
+### Skills
+
+Docker · Linux/KVM · Deep Learning · Machine Learning · JavaScript · Big Data
+
+### Links
+
+- [GitHub](https://github.com/maocili)
