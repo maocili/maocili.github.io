@@ -3,3 +3,8 @@ locale = 'en-us'
 title = 'My New Hugo Project'
 theme = 'PaperMod'
 
+[[menu.main]]
+name = 'About'
+pageRef = '/about'
+weight = 1
+
