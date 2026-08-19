@@ -4,11 +4,11 @@ title: "About"
 
 Hi, I'm **Xifeng Xu** — a Computer Science master's student at DTU – Technical University of Denmark, currently based in the Copenhagen Metropolitan Area.
 
-My interests include Deep Learning, Machine Learning, and building reliable backend systems. Before starting my master's, I worked as a Software Engineer at Juchiyun (矩池云) in Hangzhou, China, where I worked with Docker, Linux/KVM virtualization, and cloud infrastructure.
+My interests include Deep Learning, Machine Learning, and building reliable backend systems. Before starting my master's, I worked as a Software Engineer at [Matpool (矩池云)](https://matpool.com/) in Hangzhou, China, where I worked with Docker, Linux/KVM virtualization, and cloud infrastructure.
 
 ### Experience
 
-**Software Engineer · Juchiyun (矩池云)** · Hangzhou, China
+**Software Engineer · [Matpool (矩池云)](https://matpool.com/)** · Hangzhou, China
 Mar 2022 – Jun 2024 · Full-time, on-site
 
 - Docker, Linux/KVM virtualization
