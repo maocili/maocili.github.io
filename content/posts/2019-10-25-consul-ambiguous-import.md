@@ -2,6 +2,7 @@
 title = 'consul版本冲突报错'
 description = '已解决'
 date = '2019-10-25'
+summary = '记录 go mod 环境下因安装多个 consul 版本导致 ambiguous import 编译报错的排查过程与解决方案。'
 tags = ['golang', 'consul', '服务注册', '报错处理', 'go mod']
 showToc = true
 +++

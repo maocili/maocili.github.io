@@ -2,6 +2,7 @@
 title = 'Golang学习记录'
 description = 'struct 字符串输出'
 date = '2020-06-13'
+summary = '通过阅读 image.Point 源码，学习 Go 结构体实现 String() 接口以自定义 fmt 输出格式。'
 tags = ['Go', 'struct']
 showToc = true
 +++

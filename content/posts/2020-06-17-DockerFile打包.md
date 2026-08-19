@@ -2,6 +2,7 @@
 title = 'dockerfile'
 description = 'dockerfile 打包'
 date = '2020-06-17'
+summary = '记录用 Dockerfile 从 centos:7 基础镜像打包应用：安装依赖、配置环境变量、复制文件并暴露端口。'
 tags = ['dcoker', 'dockerfile']
 showToc = true
 +++
