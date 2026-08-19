@@ -2,7 +2,7 @@
 
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { relative, resolve, sep } from 'node:path'
 import { AGENT_NOTE_CLASSES, agentNoteRoot } from './agent-note-tree.ts'
 import {
   extendArchiveManifest,
@@ -23,7 +23,11 @@ if (args.length > 0 && !writeMode) {
 const archiveRoot = resolve(agentNoteRoot, 'archived')
 const manifestPath = resolve(archiveRoot, 'manifest.json')
 const repoRoot = resolve(agentNoteRoot, '../..')
-const manifestRepoPath = '.agents/notes/archived/manifest.json'
+// The manifest path in `git ls-tree` / `git show` is relative to the Git root,
+// which may differ from this script's computed repoRoot when the tracked
+// content lives in a subdirectory of the repository (e.g. `.template/`).
+const gitRoot = runGit(['rev-parse', '--show-toplevel']).trim()
+const manifestRepoPath = relative(gitRoot, manifestPath).split(sep).join('/')
 const errors: string[] = []
 const allowedRootFiles = new Set(['AGENTS.md', 'manifest.json'])
 /** Placeholder file that keeps empty kind directories tracked by Git; never an artifact. */

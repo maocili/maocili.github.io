@@ -1,10 +1,15 @@
-# AGENTS.md — Repository standing orders
+# AGENTS.md — Repository entry point
 
-This repository is a template for vibe-coding projects: it carries the documentation discipline, decision-record rules, bilingual-pairing contract, and doc gates worth copying into any new project. The template ships no product code; scaffold your project on top of it and keep the rules it documents.
+This repository is a container for vibe-coding templates. The template content lives in [`.template/`](.template/AGENTS.md), a self-contained project with its own standing orders, doc gates, bilingual-pairing contract, and agent-note discipline.
 
-- **Documentation follows the tier taxonomy in [docs/AGENTS.md](docs/AGENTS.md).** Every fact has one home; link there from anywhere else. Do not restate rules in this file that a linked home already carries.
-- **Every non-trivial change ships with an Agent Note.** A change is non-trivial when it alters behavior, contracts, structure, process, tooling, testing strategy, or any on-disk, wire, or configuration format; write or update the note per [.agents/notes/README.md](.agents/notes/README.md) in the same change.
-- **Documentation in scope is maintained as equal-authority English/Chinese pairs.** The pairing contract lives in [docs/i18n/README.md](docs/i18n/README.md); after editing either side, update the counterpart and re-record with `pnpm run verify-translation-pairing --write <pair>`.
-- **Run `pnpm run doc-sync` before committing doc or note changes.** It verifies link integrity, paragraph wrapping, doc budgets, note format, archived-note integrity, pairing consistency, skill metadata, and `ts` fences.
-- **Write a postmortem when a subtle, systemic bug escapes to production or a merged change.** The incident format and criteria live in [docs/postmortem/README.md](docs/postmortem/README.md).
-- **Skills under `.agents/skills/` are authoring examples, not standing orders.** Model your own skills on their format; do not treat their deepseek-harness references as this repository's workflow.
+- **Open agent sessions inside `.template/`** to load the full rules (`.template/AGENTS.md`) and run its gates (`pnpm run doc-sync`).
+- Files at this root level are container-level only: this entry document and the Git metadata ([`.gitattributes`](.gitattributes), [`.gitignore`](.gitignore)). They are not part of the template's gate scope.
+- To start a new project, copy `.template/` into a new directory, run `git init` and `pnpm install`, then `pnpm run doc-sync`.
+
+# AGENTS.md — 仓库入口
+
+本仓库是 vibe-coding 模板的容器。模板内容位于 [`.template/`](.template/AGENTS.md)，是一个自包含的项目，拥有自己的常设规则、文档门禁、双语配对契约与 Agent Note 纪律。
+
+- **请在 `.template/` 目录内打开 agent 会话**，以加载完整规则（`.template/AGENTS.md`）并运行其门禁（`pnpm run doc-sync`）。
+- 根目录仅保留容器级文件：本文档与 Git 元数据（[`.gitattributes`](.gitattributes)、[`.gitignore`](.gitignore)），不参与模板门禁范围。
+- 新建项目时，将 `.template/` 复制到新目录，执行 `git init` 与 `pnpm install`，再运行 `pnpm run doc-sync`。
