@@ -11,22 +11,24 @@ import { existsSync, readFileSync } from 'node:fs'
 import { dirname, relative, resolve } from 'node:path'
 import type { Nodes } from 'mdast'
 import { markdownHeadingLines, parseMarkdown, visitMarkdown } from './markdown.ts'
-import { isArchivedAgentNotePath, uniqueRepoFiles } from './repo-files.ts'
+import { agentCorpusRoot, isArchivedAgentNotePath, uniqueRepoFiles } from './repo-files.ts'
 
 const root = resolve(import.meta.dirname, '..')
+/** The `.agents` corpus lives at the Git root in this container, next to `.template/`. */
+const agentsRoot = relative(root, resolve(agentCorpusRoot(), '.agents'))
 
 /** Repo-authored Markdown checked for relative links. */
 const PATTERNS = [
   'README.md',
   'README.zh.md',
-  '.agents/notes/**/*.md',
+  agentsRoot + '/notes/**/*.md',
   'docs/**/*.md',
   'packages/*/*.md',
   'packages/*/*/*.md',
   'examples/**/*.md',
   'AGENTS.md',
   'packages/AGENTS.md',
-  '.agents/skills/**/*.md',
+  agentsRoot + '/skills/**/*.md',
 ]
 
 /** A broken relative link: a missing target path or a missing anchor on it. */

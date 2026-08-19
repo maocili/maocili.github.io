@@ -5,8 +5,9 @@
 
 import { globSync, readdirSync } from 'node:fs'
 import { resolve, sep } from 'node:path'
+import { agentCorpusRoot } from './repo-files.ts'
 
-export const agentNoteRoot = resolve(import.meta.dirname, '../.agents/notes')
+export const agentNoteRoot = resolve(agentCorpusRoot(), '.agents/notes')
 
 /** The closed set of active Agent Note lifecycles (top-level folders under .agents/notes/). */
 const AGENT_NOTE_LIFECYCLES = ['proposed', 'implemented', 'rejected'] as const

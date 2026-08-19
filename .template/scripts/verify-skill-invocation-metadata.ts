@@ -6,8 +6,9 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { load } from 'js-yaml'
+import { agentCorpusRoot } from './repo-files.ts'
 
-const ROOT = resolve(import.meta.dirname, '..')
+const ROOT = agentCorpusRoot()
 
 /** Return an object-shaped YAML value, or undefined for every other shape. */
 function asRecord(value: unknown): Record<string, unknown> | undefined {

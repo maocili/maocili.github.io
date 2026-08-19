@@ -5,27 +5,29 @@
  */
 
 import { globSync, readFileSync, realpathSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { relative, resolve } from 'node:path'
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { gfmFromMarkdown } from 'mdast-util-gfm'
 import { gfm } from 'micromark-extension-gfm'
 import { JSDOM } from 'jsdom'
 import type { Nodes } from 'mdast'
-import { isArchivedAgentNotePath } from './repo-files.ts'
+import { agentCorpusRoot, isArchivedAgentNotePath } from './repo-files.ts'
 
 const root = resolve(import.meta.dirname, '..')
+/** The `.agents` corpus lives at the Git root in this container, next to `.template/`. */
+const agentsRoot = relative(root, resolve(agentCorpusRoot(), '.agents'))
 
 const PATTERNS = [
   'README.md',
   'README.zh.md',
-  '.agents/notes/**/*.md',
+  agentsRoot + '/notes/**/*.md',
   'docs/**/*.md',
   'packages/*/*.md',
   'packages/*/*/*.md',
   'examples/**/*.md',
   'AGENTS.md',
   'packages/AGENTS.md',
-  '.agents/skills/**/*.md',
+  agentsRoot + '/skills/**/*.md',
 ]
 
 interface Block {
