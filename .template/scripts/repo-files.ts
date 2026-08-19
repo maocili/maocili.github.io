@@ -1,7 +1,7 @@
 /** Shared repository file discovery and line-oriented reference scanning. */
 
-import { globSync, readFileSync, realpathSync } from 'node:fs'
-import { relative, resolve, sep } from 'node:path'
+import { existsSync, globSync, readFileSync, realpathSync } from 'node:fs'
+import { dirname, relative, resolve, sep } from 'node:path'
 
 /** One authored path plus its canonical target for symlink deduplication. */
 export interface RepoFile {
@@ -23,7 +23,26 @@ export interface ReferenceViolation {
 
 /** Whether a repository path is frozen Agent Note history, not evolving source prose. */
 export function isArchivedAgentNotePath(path: string): boolean {
-  return path.replaceAll('\\', '/').startsWith('.agents/notes/archived/')
+  // The corpus may sit above the script root (container layout), so a leading
+  // `../` segment is part of the relative path, not of the archive prefix.
+  return path.replaceAll('\\', '/').replace(/^(?:\.\.\/)+/, '').startsWith('.agents/notes/archived/')
+}
+
+/**
+ * Absolute path to the parent directory that holds the `.agents` corpus,
+ * found by walking up from a script directory until `.agents` exists. The
+ * corpus sits at the Git root in this container (sibling of `.template/`) and
+ * at the project root in a copied template, so a fixed relative path would
+ * break one of the two layouts.
+ */
+export function agentCorpusRoot(fromDir: string = import.meta.dirname): string {
+  let dir = fromDir
+  for (;;) {
+    if (existsSync(resolve(dir, '.agents'))) return dir
+    const parent = dirname(dir)
+    if (parent === dir) throw new Error('cannot locate the .agents corpus above ' + fromDir)
+    dir = parent
+  }
 }
 
 /**

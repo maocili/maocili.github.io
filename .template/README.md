@@ -14,7 +14,7 @@ A lean template repository for vibe coding, distilled from the [deepseek-harness
 
 ## Getting started
 
-1. Copy the repository into your new project directory.
+1. Copy this template (`AGENTS.md`, `docs/`, `scripts/`, …) together with the sibling `.agents/` corpus into your new project directory.
 2. Run `git init` and `pnpm install`.
 3. Run `pnpm run doc-sync` once to verify the baseline is green.
 4. Replace this README's content with your project's introduction, keeping the bilingual pair.

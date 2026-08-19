@@ -14,7 +14,7 @@
 
 ## 快速开始
 
-1. 将整个仓库复制到你的新项目目录。
+1. 将本模板（`AGENTS.md`、`docs/`、`scripts/` 等）连同同级的 `.agents/` 语料库一起复制到你的新项目目录。
 2. 运行 `git init` 与 `pnpm install`。
 3. 运行一次 `pnpm run doc-sync`，确认基线为绿色。
 4. 用你项目的介绍替换本 README 的内容，并保持双语配对。

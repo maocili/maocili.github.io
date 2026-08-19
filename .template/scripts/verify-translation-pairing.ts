@@ -11,7 +11,8 @@
  */
 
 import { existsSync, globSync, readFileSync, writeFileSync } from 'node:fs'
-import { basename, join, resolve, sep } from 'node:path'
+import { basename, join, relative, resolve, sep } from 'node:path'
+import { agentCorpusRoot } from './repo-files.ts'
 import { gitBlobHash, readGitIndexBlob, storeGitBlob } from './translation-pairing-git.ts'
 import {
   parseTranslationPairingRecord,
@@ -33,6 +34,10 @@ import {
 } from './translation-pairing.ts'
 
 const root = resolve(import.meta.dirname, '..')
+/** The `.agents` corpus lives at the Git root in this container, next to `.template/`. */
+const agentsRoot = relative(root, resolve(agentCorpusRoot(), '.agents'))
+/** Strip a leading `../` so scope/exclusion decisions see git-root-relative paths. */
+const repoPathOf = (file: string): string => file.replace(/^(?:\.\.\/)+/, '')
 let request: ReturnType<typeof parseTranslationPairingCliArgs>
 try {
   request = parseTranslationPairingCliArgs(process.argv.slice(2))
@@ -65,8 +70,8 @@ function repositoryFileExists(file: string): boolean {
 const SCOPE_PATTERNS = [
   '**/*.md',
   '**/*.i18n.yaml',
-  '.agents/notes/**/*.md',
-  '.agents/notes/**/*.i18n.yaml',
+  agentsRoot + '/notes/**/*.md',
+  agentsRoot + '/notes/**/*.i18n.yaml',
 ]
 
 const manifestContent = readRepositoryFile('scripts/translation-pairing.manifest.json')
@@ -82,7 +87,8 @@ const manifest = parseTranslationPairingManifest(manifestContent.toString('utf8'
  * manifest must keep their trailing slash.
  */
 function isExcluded(file: string): boolean {
-  return manifest.excluded.some(entry => (entry.endsWith('/') ? file.startsWith(entry) : file === entry))
+  const repoPath = repoPathOf(file)
+  return manifest.excluded.some(entry => (entry.endsWith('/') ? repoPath.startsWith(entry) : repoPath === entry))
 }
 
 // Enumerate the scope once: the whole corpus, or exactly the named pairs'
@@ -104,7 +110,7 @@ if (request.scope === 'pairs') {
   for (const pattern of SCOPE_PATTERNS) {
     for (const match of globSync(pattern, { cwd: root, exclude: TRANSLATION_SCOPE_GLOB_EXCLUDES })) {
       const normalized = match.split(sep).join('/')
-      if (isTranslationScopeFile(normalized)) files.add(normalized)
+      if (isTranslationScopeFile(repoPathOf(normalized))) files.add(normalized)
     }
   }
 }
@@ -113,7 +119,7 @@ const metas = [...files].filter(f => f.endsWith('.i18n.yaml')).sort()
 const sources = [...files].filter(f => f.endsWith('.md') && !f.endsWith('.zh.md')).sort()
 
 if (request.scope === 'pairs') {
-  const rejected = request.anchors.filter(anchor => !isTranslationScopeFile(anchor) || isExcluded(anchor))
+  const rejected = request.anchors.filter(anchor => !isTranslationScopeFile(repoPathOf(anchor)) || isExcluded(anchor))
   const absent = request.anchors.filter((anchor) => {
     const { source, zh, meta } = translationPairPaths(anchor)
     return ![source, zh, meta].some(repositoryFileExists)
